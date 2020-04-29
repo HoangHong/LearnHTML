@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Request</title>
+</head>
+<body>
+    <a id="link">Add item</a>
+    <ul id="todo-list"></ul>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let htmlList = document.getElementById('todo-list');
+        let link = document.getElementById('link');
+        link.addEventListener('click',onClickLink);
+        function onClickLink() {
+            window.location.href = '/new-item.html';
+        }
+        let url = 'http://localhost:9080/todoList';
+        axios.get(url)
+            .then((res) => {
+                let items = res.data;
+                // console.log(items);
+                render(items);
+            });
+        
+        function render(items) {
+            let content = items.map((item, i) => {
+                return `<li> <span>${item.content} </span><button data-id="${i}"  >Edit</button></li>`;
+            });
+            htmlList.innerHTML = content.join('');
+        }
+        // let editBtn = document.getElementById('edit-btn');
+        //  editBtn.addEventListener('click', onEditItem);
+        htmlList.addEventListener('click', onEditItem)
+        function onEditItem(event) {
+            let button = event.target;
+            let i = parseInt(button.dataset.id);
+            window.location.href =`/edit-item.html#${i}`;
+        }
+    </script>
+</body>
+</html>

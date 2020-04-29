@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo list</title>
+</head>
+<body>
+    <input type="text"  id="new-item">
+    <button id="add-btn">Add</button>
+    <ul id="todo-list">
+
+    </ul>
+
+    <script>
+        let todoList = [
+          'Take a shower',
+          'Go to school',
+          'Learn english'  
+        ];
+
+        function addItem() {
+            let input = document.getElementById('new-item');
+            let newItem = input.value;
+            todoList.push(newItem);
+            render();
+            input.value = '';
+        }
+        let addBtn = document.getElementById('add-btn');
+        // addBtn.onclick = addItem;
+        addBtn.addEventListener('clicks', addItem);
+        function render() {
+            let list = document.getElementById('todo-list');
+            let content = todoList.map((item) => {
+                return `<li> ${item} </li>`
+            });
+            list.innerHTML = content.join('')
+        }
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Firebase</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.14.2/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/7.14.2/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.14.2/firebase-database.js"></script>
+    <script defer src="/__/firebase/7.14.2/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/7.14.2/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+    <script defer src="/__/firebase/7.14.2/firebase-firestore.js"></script>
+    <style media="screen">
+      
+    </style>
+  </head>
+  <body>
+    
+    <input type="text" id="new-item">
+
+    <button id="add-item">Add</button> 
+    <ul id="todo-list">
+
+    </ul>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // const firebase = require("firebase");
+        // Required for side-effects
+        // require("firebase/firestore");
+
+        let db = firebase.firestore();
+        let todoList = [];
+        
+        db.collection("users").get().then((snap) => {
+            todoList = snap.docs;
+            render();
+        });
+        let input = document.getElementById('new-item');
+
+        let btn = document.getElementById('add-item');
+        btn.addEventListener('click', addItem);
+        function addItem() {
+        let newItem = { content: input.value}
+        db.collection('users').add(newItem)
+          .then((docRef) => {
+            return docRef.get();
+          })
+          .then((snap) => {
+            todoList.push(snap);
+            render();
+            input.value = '';
+          });       
+        }
+
+        function render(items){
+        let htmlList = document.getElementById('todo-list');
+        let content = todoList.map((item) => {
+            let data = item.data();
+            return `<li> ${data.content} </li>`;
+        })
+        htmlList.innerHTML = content.join('');
+        }
+        // render([]);
+       
+      });
+    </script>
+  </body>
+</html>

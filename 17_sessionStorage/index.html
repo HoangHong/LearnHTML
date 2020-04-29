@@ -1,0 +1,57 @@
+<!-- 
+    session; phiên 
+    - mang  tính chất ngắn hạn, không tồn tại lâu dài
+
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Session Storage</title>
+ </head>
+ <body>
+     <input type="text"  id="new-item">
+     <button id="add-item">Add</button>
+     <ul id="todo-list">
+
+     </ul>
+
+
+    <script>
+        let todoList;
+        let btn = document.getElementById('add-item');
+        let input = document.getElementById('new-item');
+        input.value = sessionStorage.getItem('draft');
+        btn.addEventListener('click', addItem);
+        let storageKey = 'todoList';
+        let dataString = localStorage.getItem(storageKey); 
+        if(dataString) {
+            todoList = JSON.parse(dataString);
+        }else {
+            todoList = [];
+        }
+        input.addEventListener('change', updateSessionStorage);
+        function updateSessionStorage(){
+            sessionStorage.setItem('draft', input.value);
+        }
+        function addItem() {
+            // get value of input
+            let newItem = input.value;
+            todoList.push(newItem);
+            render();
+            input.value = '';
+            // data storage
+            localStorage.setItem(storageKey, JSON.stringify(todoList));
+        }
+        function render() {
+            let htmlList = document.getElementById('todo-list');
+            let content = todoList.map((item) => {
+                return `<li> ${item} </li>`;
+            });
+            htmlList.innerHTML = content.join('');
+        }
+        render();
+    </script>
+ </body>
+ </html>

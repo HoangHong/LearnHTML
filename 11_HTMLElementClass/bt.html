@@ -1,0 +1,47 @@
+<!-- 
+- Sử dụng getElementsByTagName() để lấy ra danh sách các <p> có class là 'foo'
+- Lặp qua các phần tử và thay đổi nội dung của từng phần tử bằng cách append (thêm vào cuối) 
+một đường link tới coders.tokyo site
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BT</title>
+</head>
+<body>
+    <div class="container">
+        <p class="foo">
+            this is paragraph
+        </p>
+        <p class="foo2">
+            this is paragraph
+        </p>
+        <p class="foo">
+            this is paragraph
+        </p>
+        <p class="foo1">
+            this is paragraph
+        </p>
+        <p class="foo2">
+            this is paragraph
+        </p>
+    </div>
+
+    <script>
+        let listP = Array.from(document.getElementsByTagName('p'));
+        console.log(listP);
+        let classFoo = listP.filter((key) => {
+            return key.classList.contains('foo');
+        })
+        console.log(classFoo);
+        let appendA = classFoo.map((item) => {
+            let a = document.createElement('a');
+            a.setAttribute('href', 'https://school.coders-x.com/');
+            a.innerText = 'CoderX';
+            item.appendChild(a);
+        })
+    </script>
+</body>
+</html>

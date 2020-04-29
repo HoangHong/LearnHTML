@@ -1,0 +1,30 @@
+
+<!-- 
+ the click event is raised(nhấp) when the user clicks on an element
+ 
+syntax 
+
+target.onclick = functionRef;
+
+- functionRef: is a function name or a function expression
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onclick</title>
+</head>
+<body>
+    <div id="demo">
+        Click here
+    </div>
+
+    <script>
+        document.getElementById('demo').onclick = function changeContent() {
+            document.getElementById('demo').innerHTML = 'Help me';
+            document.getElementById('demo').style = 'color: red';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- như bộ nhớ nhỏ trên browser
+coi như object gồm key và value
+setItem()
+getItem() 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="new-item">
+    <button id="add-item">Add</button>
+    <ul id="todo-list">
+
+    </ul>
+    <script>
+        let storageKey = 'todoList';
+        let dataString = localStorage.getItem(storageKey);
+        let todoList;
+        if(dataString) {
+            todoList = JSON.parse(dataString);
+        }else {
+            todoList = [];
+        }
+        let addBtn = document.getElementById('add-item');
+        addBtn.addEventListener('click',addItem);
+        function addItem() {
+            // get value input
+            let input = document.getElementById('new-item');
+            let newItem = input.value;
+            todoList.push(newItem);
+            //render
+            render();
+            input.value = '';
+            // store data
+
+            localStorage.setItem(storageKey, JSON.stringify(todoList));
+        }
+        function render() {
+            let htmlList = document.getElementById('todo-list');
+            let content = todoList.map((item) => {
+                return `<li>${item}</li>`;
+            })
+            htmlList.innerHTML = content.join('');
+        }
+        render();
+    </script>
+</body>
+</html>

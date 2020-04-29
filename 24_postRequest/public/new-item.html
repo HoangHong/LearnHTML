@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New item</title>
+</head>
+<body>
+    
+    <input type="text" id="new-item">
+    <button id="add-btn">Add</button>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let url = 'http://localhost:9080/todoList';
+        let addBtn = document.getElementById('add-btn');
+        addBtn.addEventListener('click', addItem);
+        function addItem() {
+            let input = document.getElementById('new-item');
+            let newItem = {
+                content: input.value
+            };
+            // add to todolist array
+            axios.post(url, newItem)
+                .then((item) => {
+                    console.log('Item saved', item);
+                });
+            window.location.href = '/';
+          }
+    </script>
+</body>
+</html>
+<!-- 
+    đường link chuyển đến trang newItem
+    khi ấn add -> lưu trên server rồi quay lại trang index
+    để chuyển trang dùng 
+    window.location.herf='/new-item.html'
+    -> quay lại window.location.herf = '/'
+
+ -->

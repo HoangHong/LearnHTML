@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+</head>
+<body>
+    <input type="text" id="newItem" />
+    <button onclick="addItem()">
+        Add
+    </button>
+    <ul id="todo-list">
+        <!-- <li>Take shower</li>
+        <li>Have a walk</li>
+        <li>Go to bed</li> -->
+    </ul>
+
+    <script type="text/javascript">
+        let todoList =  [
+            'Take shower',
+            'Have a walk',
+            'Go to bed'
+        ];
+
+        function addItem() {
+            // get value of the input
+            // add to todoList array
+            // re-render
+            let input = document.getElementById('newItem');
+            let newItem = input.value;
+            todoList.push(newItem);
+            render();
+            // clear input
+            input.value = '';
+        }
+        function deleteItem() {
+            let btn = document.getElementById('delete');
+            btn.parentElement.remove();
+        }
+        function render() {
+            let htmlList = document.getElementById('todo-list');
+            let content = todoList.map((item) => {
+                return `<li> ${item} <button onclick= "deleteItem()" id= "delete"> delete</button> </li>`;
+            });
+            console.log(content);
+
+
+            htmlList.innerHTML = content.join('');
+        }
+        render();
+      
+    </script>
+</body>
+</html>

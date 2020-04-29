@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+<body>
+    
+    <input type="text" id="new-item">
+
+    <button id="add-item">Add</button> 
+    <ul id="todo-list">
+
+    </ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let url = "http://localhost:9080/todoList";
+        axios.get(url).then(function (res ){
+            let items = res.data;
+            console.log("Data loaded...", items );
+            render(items);
+        });
+
+        let input = document.getElementById('new-item');
+
+        let btn = document.getElementById('add-item');
+        btn.addEventListener('click', addItem);
+        function addItem() {
+        let newItem = input.value;
+        todoList.push(newItem);
+        render();
+        newItem = '';
+        }
+
+        function render(items){
+        let htmlList = document.getElementById('todo-list');
+        let content = items.map((item) => {
+
+            return `<li> ${item.content} </li>`;
+        })
+        htmlList.innerHTML = content.join('');
+        }
+        // render();
+    </script>
+</body>
+</html>
